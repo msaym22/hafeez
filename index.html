@@ -393,12 +393,20 @@
             font-weight: bold;
             color: #1e3d6f;
             display: none;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
         }
         
         .map-link {
             display: none;
             text-align: center;
             margin-bottom: 1rem;
+            padding: 10px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
         
         .map-link a {
@@ -407,16 +415,25 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .map-link a:hover {
+        .map-link a:hover, .map-link a:focus {
             text-decoration: underline;
+            background-color: #e6f0ff;
+            outline: 2px solid #2c5aa0;
+            outline-offset: 2px;
         }
         
         .map-pin {
             width: 20px;
             height: 20px;
             margin-right: 5px;
+            vertical-align: middle;
         }
         
         .date-options {
@@ -553,7 +570,6 @@
         </div>
     </section>
 
-    <!-- Rest of your HTML content remains exactly the same -->
     <!-- About Section -->
     <section id="about" class="section">
         <div class="container">
@@ -760,11 +776,6 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="int-email">Email Address *</label>
-                        <input type="email" id="int-email" name="email" required>
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="int-country">Country *</label>
                         <select id="int-country" name="country" required>
                             <option value="">Select Your Country</option>
@@ -904,6 +915,7 @@
                 feeDisplay.style.display = 'block';
                 mapLink.style.display = 'block';
                 hospitalMap.href = hospital.map;
+                hospitalMap.setAttribute('target', '_blank');
                 
                 // Update time slots
                 updateTimeSlots(hospitalValue);
@@ -978,118 +990,117 @@
         }
         
         // Form submission using EmailJS
-        // Form submission using EmailJS
-function submitAppointment(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    const appointmentData = {};
-    
-    for (let [key, value] of formData.entries()) {
-        appointmentData[key] = value;
-    }
-    
-    // Validate time slot selection
-    if (!document.querySelector('.time-slot.selected')) {
-        alert('Please select a time slot');
-        return;
-    }
-    
-    // Get hospital name
-    const hospitalSelect = document.getElementById('hospital');
-    appointmentData.hospitalName = hospitals[hospitalSelect.value].name;
-    appointmentData.fee = hospitals[hospitalSelect.value].fee;
-    
-    // Get selected time
-    appointmentData['preferred-time'] = document.querySelector('.time-slot.selected').textContent;
-    
-    // Show loading spinner
-    const submitBtn = document.getElementById('submit-btn');
-    const spinner = document.getElementById('loading-spinner');
-    submitBtn.disabled = true;
-    spinner.style.display = 'inline-block';
-    
-    // Send email using EmailJS
-    emailjs.send('service_qbdbdob', 'template_mh0lvrk', {
-        name: appointmentData.name,
-        phone: appointmentData.phone,
-        email: appointmentData.email,
-        hospitalName: appointmentData.hospitalName,
-        'preferred-date': appointmentData['preferred-date'],
-        'preferred-time': appointmentData['preferred-time'],
-        'medical-concern': appointmentData['medical-concern'] || 'Not specified',
-        fee: appointmentData.fee,
-        booking_time: new Date().toLocaleString()
-    })
-    .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        // Redirect to thank you page with parameters
-        const params = new URLSearchParams();
-        params.append('name', appointmentData.name);
-        params.append('phone', appointmentData.phone);
-        params.append('hospital', appointmentData.hospitalName);
-        params.append('date', appointmentData['preferred-date']);
-        params.append('time', appointmentData['preferred-time']);
-        params.append('fee', appointmentData.fee);
-        window.location.href = 'thankyou.html?' + params.toString();
-    }, function(error) {
-        console.log('FAILED...', error);
-        alert('There was an error submitting your appointment. Please try again or contact us directly.');
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        spinner.style.display = 'none';
-    });
-}
+        function submitAppointment(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const appointmentData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                appointmentData[key] = value;
+            }
+            
+            // Validate time slot selection
+            if (!document.querySelector('.time-slot.selected')) {
+                alert('Please select a time slot');
+                return;
+            }
+            
+            // Get hospital name
+            const hospitalSelect = document.getElementById('hospital');
+            appointmentData.hospitalName = hospitals[hospitalSelect.value].name;
+            appointmentData.fee = hospitals[hospitalSelect.value].fee;
+            
+            // Get selected time
+            appointmentData['preferred-time'] = document.querySelector('.time-slot.selected').textContent;
+            
+            // Show loading spinner
+            const submitBtn = document.getElementById('submit-btn');
+            const spinner = document.getElementById('loading-spinner');
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            
+            // Send email using EmailJS
+            emailjs.send('service_qbdbdob', 'template_mh0lvrk', {
+                name: appointmentData.name,
+                phone: appointmentData.phone,
+                email: appointmentData.email,
+                hospitalName: appointmentData.hospitalName,
+                'preferred-date': appointmentData['preferred-date'],
+                'preferred-time': appointmentData['preferred-time'],
+                'medical-concern': appointmentData['medical-concern'] || 'Not specified',
+                fee: appointmentData.fee,
+                booking_time: new Date().toLocaleString()
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Redirect to thank you page with parameters
+                const params = new URLSearchParams();
+                params.append('name', appointmentData.name);
+                params.append('phone', appointmentData.phone);
+                params.append('hospital', appointmentData.hospitalName);
+                params.append('date', appointmentData['preferred-date']);
+                params.append('time', appointmentData['preferred-time']);
+                params.append('fee', appointmentData.fee);
+                window.location.href = 'thankyou.html?' + params.toString();
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('There was an error submitting your appointment. Please try again or contact us directly.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+            });
+        }
 
-function submitInternationalAppointment(event) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    const appointmentData = {};
-    
-    for (let [key, value] of formData.entries()) {
-        appointmentData[key] = value;
-    }
-    
-    // Show loading spinner
-    const submitBtn = document.getElementById('int-submit-btn');
-    const spinner = document.getElementById('int-loading-spinner');
-    submitBtn.disabled = true;
-    spinner.style.display = 'inline-block';
-    
-    // Send email using EmailJS
-    emailjs.send('service_qbdbdob', 'template_bllk5i7', {
-        name: appointmentData.name,
-        phone: appointmentData.phone,
-        email: appointmentData.email,
-        country: appointmentData.country,
-        timezone: appointmentData.timezone,
-        'medical-concern': appointmentData['medical-concern'],
-        booking_time: new Date().toLocaleString()
-    })
-    .then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-        // Redirect to thank you page with parameters
-        const params = new URLSearchParams();
-        params.append('name', appointmentData.name);
-        params.append('phone', appointmentData.phone);
-        params.append('hospital', 'Online Consultation');
-        params.append('date', 'To be scheduled');
-        params.append('time', appointmentData.timezone);
-        params.append('fee', 'Will be discussed');
-        window.location.href = 'thankyou.html?' + params.toString();
-    }, function(error) {
-        console.log('FAILED...', error);
-        alert('There was an error submitting your appointment. Please try again or contact us directly.');
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        spinner.style.display = 'none';
-    });
-}
+        function submitInternationalAppointment(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const appointmentData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                appointmentData[key] = value;
+            }
+            
+            // Show loading spinner
+            const submitBtn = document.getElementById('int-submit-btn');
+            const spinner = document.getElementById('int-loading-spinner');
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            
+            // Send email using EmailJS
+            emailjs.send('service_qbdbdob', 'template_bllk5i7', {
+                name: appointmentData.name,
+                phone: appointmentData.phone,
+                email: appointmentData.email,
+                country: appointmentData.country,
+                timezone: appointmentData.timezone,
+                'medical-concern': appointmentData['medical-concern'],
+                booking_time: new Date().toLocaleString()
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Redirect to thank you page with parameters
+                const params = new URLSearchParams();
+                params.append('name', appointmentData.name);
+                params.append('phone', appointmentData.phone);
+                params.append('hospital', 'Online Consultation');
+                params.append('date', 'To be scheduled');
+                params.append('time', appointmentData.timezone);
+                params.append('fee', 'Will be discussed');
+                window.location.href = 'thankyou.html?' + params.toString();
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('There was an error submitting your appointment. Please try again or contact us directly.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+            });
+        }
         
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

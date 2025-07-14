@@ -66,6 +66,15 @@
     }
     </script>
     
+    <!-- Add EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Initialize EmailJS with your public key
+            emailjs.init('W3D5p58zQieCMA44G');
+        })();
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -467,20 +476,6 @@
             cursor: not-allowed;
         }
         
-        .thank-you {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .thank-you h2 {
-            color: #28a745;
-            margin-bottom: 1rem;
-        }
-        
         .whatsapp-btn {
             position: fixed;
             bottom: 20px;
@@ -502,6 +497,21 @@
         
         .whatsapp-btn:hover {
             transform: scale(1.1);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -529,7 +539,7 @@
                 <div class="credential">MBBS (Gold Medalist)</div>
                 <div class="credential">FCPS (Gastroenterology & Hepatology)</div>
                 <div class="credential">MCPS (Medicine)</div>
-                <div class="credential">ESEGH (UK)<span style="font-size: 0.7em; display: block;">Certified European Board</span></div>
+                <div class="credential">ESEGH (UK)</div>
                 <div class="credential">DOH (UAE)</div>
             </div>
             
@@ -675,8 +685,13 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="phone">Phone Number (WhatsApp) *</label>
+                        <label for="phone">Phone Number *</label>
                         <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
                     
                     <div class="form-group">
@@ -722,17 +737,13 @@
                         <textarea id="medical-concern" name="medical-concern" rows="3"></textarea>
                     </div>
                     
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Book Appointment</button>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;" id="submit-btn">
+                        Book Appointment
+                        <span class="loading" id="loading-spinner" style="display: none;"></span>
+                    </button>
                     
                     <button type="button" class="btn btn-blue" style="width: 100%; margin-top: 1rem;" onclick="showInternationalForm()">Appointment for International Patients</button>
                 </form>
-                
-                <div class="thank-you" id="thank-you">
-                    <h2>Thank You!</h2>
-                    <p>Your appointment request has been submitted successfully.</p>
-                    <p>Details will be shared with you shortly via WhatsApp.</p>
-                    <p>For any urgent queries, please call: <strong>0315-6263475</strong></p>
-                </div>
             </div>
             
             <div class="appointment-form" id="international-form" style="display: none;">
@@ -747,6 +758,11 @@
                     <div class="form-group">
                         <label for="int-phone">Phone Number (with country code) *</label>
                         <input type="tel" id="int-phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="int-email">Email Address *</label>
+                        <input type="email" id="int-email" name="email" required>
                     </div>
                     
                     <div class="form-group">
@@ -778,7 +794,10 @@
                         <textarea id="int-concern" name="medical-concern" rows="3" required></textarea>
                     </div>
                     
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Request Online Consultation</button>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;" id="int-submit-btn">
+                        Request Online Consultation
+                        <span class="loading" id="int-loading-spinner" style="display: none;"></span>
+                    </button>
                     <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="hideInternationalForm()">Back to Local Appointment</button>
                 </form>
             </div>
@@ -831,7 +850,7 @@
         Thank you! Your appointment request has been submitted successfully.
     </div>
 
-    <div class="whatsapp-btn" title="Chat on WhatsApp">
+    <div class="whatsapp-btn" title="Chat on WhatsApp" onclick="window.open('https://wa.me/923156263475', '_blank')">
         💬
     </div>
 
@@ -863,7 +882,7 @@
                 lng: "74.1696312",
                 times: ["8:00 PM", "8:15 PM", "8:30 PM", "8:45 PM"],
                 image: "https://lh3.googleusercontent.com/gps-cs-s/AC9h4nrLmxYeTvcub4PHE9ki080GHsv2xVWAZ-8zcQHJsajItHiB8rgDHLQHzYmBpUKpPG1-59y0pHGooQG8aWKm6yRDgqt3Z-Czz3LAExTrGPk8blO2Hy4y7RFUJofLrkj-lrVwDGEPAQ=w114-h86-k-no",
-                                map: "https://www.google.com/maps/dir//Moza+maraka,+near+main+gate,+AA-Block+Sector+D+Bahria+Town,+Lahore,+53801/@31.3802452,74.0872299,22651m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3918ff75e7004bbd:0x23c49d5b375c94b9!2m2!1d74.1696312!2d31.3802715?entry=ttu&g_ep=EgoyMDI1MDcwOS4wIKXMDSoASAFQAw%3D%3D"
+                map: "https://www.google.com/maps/dir//Moza+maraka,+near+main+gate,+AA-Block+Sector+D+Bahria+Town,+Lahore,+53801/@31.3802452,74.0872299,22651m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3918ff75e7004bbd:0x23c49d5b375c94b9!2m2!1d74.1696312!2d31.3802715?entry=ttu&g_ep=EgoyMDI5MDcwOS4wIKXMDSoASAFQAw%3D%3D"
             }
         };
         
@@ -958,7 +977,7 @@
             document.getElementById('international-form').style.display = 'none';
         }
         
-        // Form submission
+        // Form submission using EmailJS
         function submitAppointment(event) {
             event.preventDefault();
             
@@ -980,48 +999,39 @@
             const hospitalSelect = document.getElementById('hospital');
             appointmentData.hospitalName = hospitals[hospitalSelect.value].name;
             
-            // Create WhatsApp message
-            const whatsappMessage = `New Appointment Request:
-Name: ${appointmentData.name}
-Phone: ${appointmentData.phone}
-Hospital: ${appointmentData.hospitalName}
-Date: ${appointmentData['preferred-date']}
-Time: ${appointmentData['preferred-time']}
-Concern: ${appointmentData['medical-concern'] || 'Not specified'}`;
+            // Get selected time
+            appointmentData['preferred-time'] = document.querySelector('.time-slot.selected').textContent;
             
-            // Send to WhatsApp in background
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://wa.me/923001171059?text=${encodedMessage}`;
+            // Show loading spinner
+            const submitBtn = document.getElementById('submit-btn');
+            const spinner = document.getElementById('loading-spinner');
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
             
-            // Create hidden iframe to send WhatsApp message without redirect
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = whatsappUrl;
-            document.body.appendChild(iframe);
-            
-            // Show thank you message
-            form.style.display = 'none';
-            document.getElementById('thank-you').style.display = 'block';
-            
-            // Remove iframe after short delay
-            setTimeout(() => {
-                iframe.remove();
-            }, 3000);
-            
-            // Reset form after delay
-            setTimeout(() => {
-                form.reset();
-                form.style.display = 'block';
-                document.getElementById('thank-you').style.display = 'none';
-                document.getElementById('hospital-fee').style.display = 'none';
-                document.getElementById('map-link').style.display = 'none';
-                document.querySelectorAll('.time-slot').forEach(slot => {
-                    slot.classList.remove('selected');
-                });
-                document.querySelectorAll('.date-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-            }, 5000);
+            // Send email using EmailJS
+            emailjs.send('service_qbdbdob', 'template_mh0lvrk', {
+                name: appointmentData.name,
+                phone: appointmentData.phone,
+                email: appointmentData.email,
+                hospitalName: appointmentData.hospitalName,
+                'preferred-date': appointmentData['preferred-date'],
+                'preferred-time': appointmentData['preferred-time'],
+                'medical-concern': appointmentData['medical-concern'] || 'Not specified',
+                fee: hospitals[hospitalSelect.value].fee,
+                booking_time: new Date().toLocaleString()
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Redirect to thank you page
+                window.location.href = 'thankyou.html';
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('There was an error submitting your appointment. Please try again or contact us directly.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+            });
         }
         
         function submitInternationalAppointment(event) {
@@ -1035,45 +1045,35 @@ Concern: ${appointmentData['medical-concern'] || 'Not specified'}`;
                 appointmentData[key] = value;
             }
             
-            // Create WhatsApp message
-            const whatsappMessage = `New International Appointment Request:
-Name: ${appointmentData.name}
-Phone: ${appointmentData.phone}
-Country: ${appointmentData.country}
-Time Zone: ${appointmentData.timezone}
-Medical Concern: ${appointmentData['medical-concern']}`;
+            // Show loading spinner
+            const submitBtn = document.getElementById('int-submit-btn');
+            const spinner = document.getElementById('int-loading-spinner');
+            submitBtn.disabled = true;
+            spinner.style.display = 'inline-block';
             
-            // Send to WhatsApp in background
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://wa.me/923156263475?text=${encodedMessage}`;
-            
-            // Create hidden iframe to send WhatsApp message without redirect
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = whatsappUrl;
-            document.body.appendChild(iframe);
-            
-            // Show notification
-            const notification = document.getElementById('notification');
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 5000);
-            
-            // Remove iframe after short delay
-            setTimeout(() => {
-                iframe.remove();
-            }, 3000);
-            
-            // Reset form
-            form.reset();
-            hideInternationalForm();
+            // Send email using EmailJS
+            emailjs.send('service_qbdbdob', 'template_bllk5i7', {
+                name: appointmentData.name,
+                phone: appointmentData.phone,
+                email: appointmentData.email,
+                country: appointmentData.country,
+                timezone: appointmentData.timezone,
+                'medical-concern': appointmentData['medical-concern'],
+                booking_time: new Date().toLocaleString()
+            })
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Redirect to thank you page
+                window.location.href = 'thankyou.html';
+            }, function(error) {
+                console.log('FAILED...', error);
+                alert('There was an error submitting your appointment. Please try again or contact us directly.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                spinner.style.display = 'none';
+            });
         }
-        
-        // WhatsApp button click
-        document.querySelector('.whatsapp-btn').addEventListener('click', function() {
-            window.open('https://wa.me/923156263475', '_blank');
-        });
         
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

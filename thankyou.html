@@ -19,12 +19,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         
         .container {
             max-width: 600px;
-            margin: 0 auto;
-            padding: 0 20px;
+            width: 100%;
         }
         
         .thank-you-card {
@@ -36,22 +36,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-        
-        .thank-you-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(44, 90, 160, 0.1), transparent);
-            animation: shine 2s infinite;
-        }
-        
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
         
         .success-icon {
@@ -112,6 +96,9 @@
         
         .detail-value {
             color: #666;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
         }
         
         .contact-info {
@@ -130,6 +117,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 0.5rem;
+            justify-content: center;
         }
         
         .contact-icon {
@@ -156,14 +144,6 @@
             background: #3a6bc0;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .btn-secondary {
-            background: #28a745;
-        }
-        
-        .btn-secondary:hover {
-            background: #32ad4a;
         }
         
         .whatsapp-btn {
@@ -212,6 +192,7 @@
             margin-bottom: 0.5rem;
             padding-left: 1.5rem;
             position: relative;
+            text-align: left;
         }
         
         .next-steps li::before {
@@ -251,11 +232,12 @@
             }
             
             .detail-value {
-                font-weight: normal;
+                text-align: left;
                 margin-top: 0.25rem;
+                max-width: 100%;
             }
             
-            .btn {
+            .btn, .whatsapp-btn {
                 display: block;
                 width: 100%;
                 margin: 10px 0;
@@ -326,8 +308,8 @@
             </div>
             
             <div style="margin-top: 2rem;">
-                <a href="javascript:history.back()" class="btn">← Back to Website</a>
-                <a href="https://wa.me/923156263475" target="_blank" class="whatsapp-btn">
+                <a href="index.html" class="btn">← Back to Website</a>
+                <a href="https://wa.me/923156263475" class="whatsapp-btn" target="_blank">
                     💬 Chat on WhatsApp
                 </a>
             </div>
@@ -343,14 +325,36 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
         
+        // Format date to be more readable
+        function formatDate(dateString) {
+            if (!dateString || dateString === '-' || dateString === 'To be scheduled') return dateString;
+            
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString;
+                
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return date.toLocaleDateString('en-US', options);
+            } catch (e) {
+                return dateString;
+            }
+        }
+        
         // Populate appointment details
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('patient-name').textContent = getUrlParameter('name') || '-';
-            document.getElementById('patient-phone').textContent = getUrlParameter('phone') || '-';
-            document.getElementById('patient-hospital').textContent = getUrlParameter('hospital') || '-';
-            document.getElementById('patient-date').textContent = getUrlParameter('date') || '-';
-            document.getElementById('patient-time').textContent = getUrlParameter('time') || '-';
-            document.getElementById('patient-fee').textContent = getUrlParameter('fee') || '-';
+            const name = getUrlParameter('name') || '-';
+            const phone = getUrlParameter('phone') || '-';
+            const hospital = getUrlParameter('hospital') || '-';
+            const date = formatDate(getUrlParameter('date')) || '-';
+            const time = getUrlParameter('time') || '-';
+            const fee = getUrlParameter('fee') || '-';
+            
+            document.getElementById('patient-name').textContent = name;
+            document.getElementById('patient-phone').textContent = phone;
+            document.getElementById('patient-hospital').textContent = hospital;
+            document.getElementById('patient-date').textContent = date;
+            document.getElementById('patient-time').textContent = time;
+            document.getElementById('patient-fee').textContent = fee;
         });
         
         // Countdown timer
@@ -374,7 +378,7 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // Add some animation effects
+        // Add entry animation
         document.querySelector('.thank-you-card').style.opacity = '0';
         document.querySelector('.thank-you-card').style.transform = 'translateY(30px)';
         

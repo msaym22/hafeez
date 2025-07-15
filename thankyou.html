@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You - Dr. Hafiz Hafeez Anjum</title>
+    <title>Appointment Confirmation - Dr. Hafiz Hafeez Anjum</title>
     <style>
         * {
             margin: 0;
@@ -13,380 +13,239 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
         }
         
         .container {
-            max-width: 600px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .thank-you-card {
+        header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(44, 90, 160, 0.9), rgba(30, 61, 111, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f8ff" width="1200" height="600"/><circle fill="%23e6f3ff" cx="200" cy="150" r="80"/><circle fill="%23e6f3ff" cx="1000" cy="400" r="120"/><path fill="%23d4edfa" d="M0,400 Q300,350 600,400 T1200,400 L1200,600 L0,600 Z"/></svg>');
+            color: white;
+            padding: 150px 0 100px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .confirmation-container {
             background: white;
-            color: #333;
             padding: 3rem;
             border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .success-icon {
-            font-size: 4rem;
-            color: #28a745;
-            margin-bottom: 1rem;
-            animation: bounce 1s ease-in-out;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
-        }
-        
-        .thank-you-card h1 {
             font-size: 2.5rem;
+            margin-bottom: 3rem;
             color: #1e3d6f;
-            margin-bottom: 1rem;
         }
         
-        .thank-you-card p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            color: #666;
-        }
-        
-        .appointment-details {
-            background: #f8f9fa;
+        .confirmation-details {
+            background: #f0f8ff;
             padding: 2rem;
             border-radius: 15px;
-            margin: 2rem 0;
-            border-left: 5px solid #28a745;
-        }
-        
-        .appointment-details h3 {
-            color: #1e3d6f;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #2c5aa0;
         }
         
         .detail-item {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid #e0e6ed;
-        }
-        
-        .detail-item:last-child {
-            border-bottom: none;
         }
         
         .detail-label {
             font-weight: bold;
+            min-width: 200px;
             color: #1e3d6f;
         }
         
         .detail-value {
-            color: #666;
-            text-align: right;
-            max-width: 60%;
-            word-break: break-word;
-        }
-        
-        .contact-info {
-            background: #2c5aa0;
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-        
-        .contact-info h3 {
-            margin-bottom: 1rem;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            justify-content: center;
-        }
-        
-        .contact-icon {
-            margin-right: 10px;
-            font-size: 1.2rem;
+            flex: 1;
         }
         
         .btn {
-            background: #2c5aa0;
-            color: white;
-            padding: 12px 30px;
+            background: #ffd700;
+            color: #1e3d6f;
+            padding: 15px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             display: inline-block;
-            margin: 0 10px;
         }
         
         .btn:hover {
-            background: #3a6bc0;
+            background: #ffed4e;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        .whatsapp-btn {
-            background: #25D366;
+        .btn-blue {
+            background: #2c5aa0;
             color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px;
         }
         
-        .whatsapp-btn:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .btn-blue:hover {
+            background: #3a6bc0;
+            color: white;
         }
         
-        .next-steps {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-        
-        .next-steps h3 {
-            color: #856404;
-            margin-bottom: 1rem;
-        }
-        
-        .next-steps ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .next-steps li {
-            color: #856404;
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-            text-align: left;
-        }
-        
-        .next-steps li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #28a745;
-            font-weight: bold;
-        }
-        
-        .countdown {
-            background: #e7f3ff;
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
+        .text-center {
             text-align: center;
         }
         
-        .countdown-timer {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2c5aa0;
+        footer {
+            background: #1e3d6f;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 80px;
         }
         
         @media (max-width: 768px) {
-            .thank-you-card {
-                padding: 2rem 1.5rem;
-            }
-            
-            .thank-you-card h1 {
-                font-size: 2rem;
-            }
-            
             .detail-item {
                 flex-direction: column;
-                text-align: left;
             }
             
-            .detail-value {
-                text-align: left;
-                margin-top: 0.25rem;
-                max-width: 100%;
+            .detail-label {
+                margin-bottom: 0.5rem;
+                min-width: auto;
             }
             
-            .btn, .whatsapp-btn {
-                display: block;
-                width: 100%;
-                margin: 10px 0;
+            .section-title {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="thank-you-card">
-            <div class="success-icon">✅</div>
-            <h1>Thank You!</h1>
-            <p>Your appointment request has been submitted successfully. We will contact you shortly to confirm your appointment details.</p>
-            
-            <div class="appointment-details">
-                <h3>📋 Appointment Summary</h3>
-                <div class="detail-item">
-                    <span class="detail-label">Name:</span>
-                    <span class="detail-value" id="patient-name">-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Phone:</span>
-                    <span class="detail-value" id="patient-phone">-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Hospital:</span>
-                    <span class="detail-value" id="patient-hospital">-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Date:</span>
-                    <span class="detail-value" id="patient-date">-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Time:</span>
-                    <span class="detail-value" id="patient-time">-</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Consultation Fee:</span>
-                    <span class="detail-value" id="patient-fee">-</span>
-                </div>
-            </div>
-            
-            <div class="next-steps">
-                <h3>📝 What Happens Next?</h3>
-                <ul>
-                    <li>Our team will contact you within 15 minutes via WhatsApp</li>
-                    <li>Appointment confirmation will be sent to your phone</li>
-                    <li>You'll receive hospital location and parking details</li>
-                    <li>Pre-appointment instructions will be shared if needed</li>
-                </ul>
-            </div>
-            
-            <div class="countdown">
-                <p>Expected callback within:</p>
-                <div class="countdown-timer" id="countdown">15:00</div>
-            </div>
-            
-            <div class="contact-info">
-                <h3>📞 Need Immediate Help?</h3>
-                <div class="contact-item">
-                    <span class="contact-icon">📱</span>
-                    <span>WhatsApp: +92 315 6263475</span>
-                </div>
-                <div class="contact-item">
-                    <span class="contact-icon">⏰</span>
-                    <span>Available 24/7 for emergencies</span>
-                </div>
-            </div>
-            
-            <div style="margin-top: 2rem;">
-                <a href="index.html" class="btn">← Back to Website</a>
-                <a href="https://wa.me/923156263475" class="whatsapp-btn" target="_blank">
-                    💬 Chat on WhatsApp
-                </a>
-            </div>
+    <header>
+        <nav class="container">
+            <div class="logo">Dr. Hafiz Hafeez Anjum</div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Appointment Confirmed</h1>
+            <p class="subtitle">Thank you for booking your consultation</p>
         </div>
     </div>
-    
-    <script>
-        // Get appointment details from URL parameters
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            const results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-        
-        // Format date to be more readable
-        function formatDate(dateString) {
-            if (!dateString || dateString === '-' || dateString === 'To be scheduled') return dateString;
-            
-            try {
-                const date = new Date(dateString);
-                if (isNaN(date.getTime())) return dateString;
+
+    <section class="section">
+        <div class="container">
+            <div class="confirmation-container">
+                <h2 class="section-title">Your Appointment Details</h2>
                 
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                return date.toLocaleDateString('en-US', options);
-            } catch (e) {
-                return dateString;
-            }
-        }
-        
-        // Populate appointment details
+                <div class="confirmation-details" id="confirmationDetails">
+                    <!-- Details will be inserted here by JavaScript -->
+                </div>
+                
+                <div class="text-center">
+                    <p style="margin-bottom: 2rem; font-size: 1.1rem;">We've received your booking request and will contact you shortly to confirm your appointment.</p>
+                    <a href="index.html" class="btn btn-blue">Return to Homepage</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dr. Hafiz Hafeez Anjum. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                Medical Disclaimer: This website is for informational purposes only and does not constitute medical advice. 
+                Always consult with a qualified healthcare provider for medical diagnosis and treatment.
+            </p>
+        </div>
+    </footer>
+
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const name = getUrlParameter('name') || '-';
-            const phone = getUrlParameter('phone') || '-';
-            const hospital = getUrlParameter('hospital') || '-';
-            const date = formatDate(getUrlParameter('date')) || '-';
-            const time = getUrlParameter('time') || '-';
-            const fee = getUrlParameter('fee') || '-';
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
             
-            document.getElementById('patient-name').textContent = name;
-            document.getElementById('patient-phone').textContent = phone;
-            document.getElementById('patient-hospital').textContent = hospital;
-            document.getElementById('patient-date').textContent = date;
-            document.getElementById('patient-time').textContent = time;
-            document.getElementById('patient-fee').textContent = fee;
-        });
-        
-        // Countdown timer
-        let countdown = 15 * 60; // 15 minutes in seconds
-        const countdownElement = document.getElementById('countdown');
-        
-        function updateCountdown() {
-            const minutes = Math.floor(countdown / 60);
-            const seconds = countdown % 60;
-            countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            if (countdown > 0) {
-                countdown--;
-            } else {
-                countdownElement.textContent = "Contact us now!";
-                countdownElement.style.color = '#dc3545';
+            // Format the date if it exists
+            let appointmentDate = urlParams.get('date');
+            if (appointmentDate && appointmentDate !== 'To be scheduled') {
+                const dateObj = new Date(appointmentDate);
+                appointmentDate = dateObj.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
             }
-        }
-        
-        // Start countdown
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-        
-        // Add entry animation
-        document.querySelector('.thank-you-card').style.opacity = '0';
-        document.querySelector('.thank-you-card').style.transform = 'translateY(30px)';
-        
-        setTimeout(() => {
-            document.querySelector('.thank-you-card').style.transition = 'all 0.6s ease';
-            document.querySelector('.thank-you-card').style.opacity = '1';
-            document.querySelector('.thank-you-card').style.transform = 'translateY(0)';
-        }, 100);
+            
+            // Create HTML for confirmation details
+            let detailsHTML = `
+                <div class="detail-item">
+                    <div class="detail-label">Patient Name:</div>
+                    <div class="detail-value">${urlParams.get('name') || 'Not provided'}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Phone Number:</div>
+                    <div class="detail-value">${urlParams.get('phone') || 'Not provided'}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Hospital/Clinic:</div>
+                    <div class="detail-value">${urlParams.get('hospital') || 'Not specified'}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Appointment Date:</div>
+                    <div class="detail-value">${appointmentDate || 'To be scheduled'}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Appointment Time:</div>
+                    <div class="detail-value">${urlParams.get('time') || 'To be scheduled'}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Consultation Fee:</div>
+                    <div class="detail-value">${urlParams.get('fee') || 'Will be discussed'}</div>
+                </div>
+            `;
+            
+            // Insert the details into the page
+            document.getElementById('confirmationDetails').innerHTML = detailsHTML;
+        });
     </script>
 </body>
 </html>
